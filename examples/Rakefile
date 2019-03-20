@@ -24,15 +24,15 @@ task :default do
 <!doctype html>
 <html>
   <head>
-    <title>#{name}</title>
-    #{head}
+    <title><%= name %></title>
+    <%= head %>
   </head>
   <body>
-    <h1>#{name}</h1>
+    <h1><%= name %></h1>
     <main></main>
-    <pre><code class="ocaml">#{CGI.escape_html(File.read("#{name}.ml"))}</code></pre>
-    #{footer}
-    <script src="#{name}.bs.js"></script>
+    <pre><code class="ocaml"><%= CGI.escape_html(File.read(name + ".ml")) %></code></pre>
+    <%= footer %>
+    <script src="<%= name %>.bs.js"></script>
     <script src="highlight.js"></script>
   </body>
 </html>
@@ -44,7 +44,7 @@ ERB
 <html>
   <head>
     <title>Examples</title>
-    #{head}
+    <%= head %>
   </head>
   <body>
     <h1>bs-preact Examples</h1>
@@ -55,7 +55,7 @@ ERB
         </li>
       <% end %>
     </ul>
-    #{footer}
+    <%= footer %>
   </body>
 </html>
 ERB
