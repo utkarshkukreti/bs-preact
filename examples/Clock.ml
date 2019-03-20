@@ -5,7 +5,7 @@ module Clock = struct
    fun [@preact.component "Clock"] () ->
     let[@hook] isRunning, setIsRunning = P.useState true in
     let[@hook] now, setNow = P.useState (Js.Date.make ()) in
-    let[@hook] () = AnimationFrame_.use (isRunning, fun _ -> setNow (Js.Date.make ())) in
+    let[@hook] () = AnimationFrame.use (isRunning, fun _ -> setNow (Js.Date.make ())) in
     let f n = P.string ((if n < 10.0 then "0" else "") ^ Js.Float.toString n) in
     P.h2
       [ P.style "text-align" "center" ]

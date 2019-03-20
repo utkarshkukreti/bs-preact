@@ -9,7 +9,7 @@ module Clock = struct
    fun [@preact.component "Clock"] () ->
     let[@hook] isRunning, setIsRunning = P.useState true in
     let[@hook] now, setNow = P.useState (Js.Date.now ()) in
-    let[@hook] () = AnimationFrame_.use (isRunning, fun _ -> setNow (utcNow ())) in
+    let[@hook] () = AnimationFrame.use (isRunning, fun _ -> setNow (utcNow ())) in
     let circle =
       S.circle [ S.cx "100"; S.cy "100"; S.r "98"; S.fill "none"; S.stroke "black" ] []
     in

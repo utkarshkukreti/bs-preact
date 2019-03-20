@@ -15,6 +15,7 @@ module Clicks = struct
       ; P.style "padding" "1rem"
       ; P.style "background" "#ffc"
       ; P.style "overflow" "scroll"
+      ; P.style "margin-bottom" "2rem"
       ; P.onClick (fun event ->
             dispatch P.Event.Mouse.(Clicked (clientX event, clientY event)))
       ]

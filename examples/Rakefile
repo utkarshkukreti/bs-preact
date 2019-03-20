@@ -1,6 +1,8 @@
 require "cgi"
 require "erb"
 
+NO_MAIN = ["AnimationFrame"]
+
 def write(path, template, binding)
   File.write(path, ERB.new(template).result(binding))
 end
@@ -17,9 +19,17 @@ footer = <<HTML
 HTML
 
 task :default do
-  files = FileList["*.ml"].ext("").reject { |file| file.end_with?("_") }
+  files = FileList["*.ml"].ext("").reject { |file| NO_MAIN.include?(file) }
 
   files.each do |name|
+    code = File.read("#{name}.ml")
+    codes = [name]
+    NO_MAIN.each do |file|
+      if code.include?("#{file}.")
+        codes << file
+      end
+    end
+
     write "#{name}.html", <<ERB, binding
 <!doctype html>
 <html>
@@ -30,7 +40,10 @@ task :default do
   <body>
     <h1><%= name %></h1>
     <main></main>
-    <pre><code class="ocaml"><%= CGI.escape_html(File.read(name + ".ml")) %></code></pre>
+    <% codes.each do |file| %>
+      <h2><%= file %>.ml</h2>
+      <pre><code class="ocaml"><%= CGI.escape_html(File.read(file + ".ml")) %></code></pre>
+    <% end %>
     <%= footer %>
     <script src="<%= name %>.bs.js"></script>
     <script src="highlight.js"></script>

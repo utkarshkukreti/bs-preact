@@ -7,16 +7,16 @@ body {
   margin: 1rem;
 }
 
-h1 {
-  margin: 0 0 1rem 0;
-  font-size: 2rem;
+h1,
+h2 {
   text-align: center;
+  margin: 0 0 1rem 0;
 }
 
 .hljs {
   width: 960px;
   max-width: 90%;
-  margin: 1rem auto;
+  margin: 1rem auto 2rem;
   padding: 1rem;
   font-family: Monaco, Consolas, monospace;
   white-space: pre-wrap;
@@ -24,6 +24,6 @@ h1 {
 }
 
 footer {
-  margin-top: 2rem;
+  margin-top: 1rem;
   text-align: right;
 }
