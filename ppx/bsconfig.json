@@ -1,0 +1,12 @@
+{
+  "name": "bs-preact-ppx",
+  "sources": [
+    { "dir": "src", "type": "ppx" },
+    { "dir": "tests", "type": "dev", "subdirs": true, "ppx": ["Preact_Ppx"] }
+  ],
+  "entries": [
+    { "backend": "native", "main-module": "Tests" },
+    { "backend": "native", "main-module": "Preact_Ppx", "type": "ppx" }
+  ],
+  "refmt": 3
+}

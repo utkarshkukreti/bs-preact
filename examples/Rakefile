@@ -1,0 +1,76 @@
+require "erb"
+
+def write(path, template, binding)
+  File.write(path, ERB.new(template).result(binding))
+end
+
+style = <<HTML
+<style>
+  * {
+    box-sizing: border-box;
+    font-family: Verdana;
+  }
+  body {
+    margin: 1rem;
+  }
+  h1 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+    text-align: center;
+  }
+  footer {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+</style>
+HTML
+
+footer = <<HTML
+<footer>
+  Powered by <a href="https://github.com/utkarshkukreti/bs-preact">bs-preact</a>.
+</footer>
+HTML
+
+task :default do
+  files = FileList["*.ml"].ext("").reject { |file| file.end_with?("_") }
+
+  files.each do |name|
+    write "#{name}.html", <<ERB, binding
+<!doctype html>
+<html>
+  <head>
+    <title>#{name}</title>
+    #{style}
+  </head>
+  <body>
+    <h1>#{name}</h1>
+    <main></main>
+    #{footer}
+    <script src="#{name}.bs.js"></script>
+  </body>
+</html>
+ERB
+  end
+
+  write "index.html", <<ERB, binding
+<!doctype html>
+<html>
+  <head>
+    <title>Examples</title>
+    #{style}
+  </head>
+  <body>
+    <h1>bs-preact Examples</h1>
+    <ul>
+      <% files.each do |name| %>
+        <li>
+          <a href="<%= name %>.html"><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+    #{footer}
+  </body>
+</html>
+ERB
+end

@@ -1,0 +1,23 @@
+module Preact =
+  struct
+    type undefined
+    let undefined: undefined = Obj.magic ()
+    let useState _ _ = Obj.magic ()
+    let useReducer _ _ _ = Obj.magic ()
+    let component _ _ = Obj.magic ()
+  end
+let _foo =
+  Preact.component "Foo"
+    (fun _  ->
+       let (_count,_setCount) = Preact.useState () Preact.undefined in ())
+let useThing _ (_ : Preact.undefined) =
+  let (count,_setCount) = Preact.useState () Preact.undefined in
+  let () = Js.log "in useThing!" in
+  let (value,_dispatch) = Preact.useReducer () () Preact.undefined in
+  (count, value)
+let _foo =
+  Preact.component "Foo"
+    (fun _  ->
+       let (_count,_setCount) = Preact.useState () Preact.undefined in
+       let (_value,_dispatch) = Preact.useReducer () () Preact.undefined in
+       let (_,_) = useThing () Preact.undefined in ())
