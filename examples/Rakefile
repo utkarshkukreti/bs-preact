@@ -1,3 +1,4 @@
+require "cgi"
 require "erb"
 
 def write(path, template, binding)
@@ -5,6 +6,7 @@ def write(path, template, binding)
 end
 
 head = <<HTML
+<link rel="stylesheet" href="../node_modules/highlight.js/styles/atom-one-dark.css">
 <link rel="stylesheet" href="style.css">
 HTML
 
@@ -28,8 +30,10 @@ task :default do
   <body>
     <h1>#{name}</h1>
     <main></main>
+    <pre><code class="ocaml">#{CGI.escape_html(File.read("#{name}.ml"))}</code></pre>
     #{footer}
     <script src="#{name}.bs.js"></script>
+    <script src="highlight.js"></script>
   </body>
 </html>
 ERB

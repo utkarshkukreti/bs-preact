@@ -1,17 +1,29 @@
 * {
   box-sizing: border-box;
-  font-family: Verdana;
 }
+
 body {
+  font-family: 'Lucida Grande', Verdana, sans-serif;
   margin: 1rem;
 }
+
 h1 {
   margin: 0 0 1rem 0;
   font-size: 2rem;
   text-align: center;
 }
+
+.hljs {
+  width: 960px;
+  max-width: 90%;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-family: Monaco, Consolas, monospace;
+  white-space: pre-wrap;
+  border-radius: 4px;
+}
+
 footer {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  margin-top: 2rem;
+  text-align: right;
 }
