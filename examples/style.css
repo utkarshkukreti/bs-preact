@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+  font-family: Verdana;
+}
+body {
+  margin: 1rem;
+}
+h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  text-align: center;
+}
+footer {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}

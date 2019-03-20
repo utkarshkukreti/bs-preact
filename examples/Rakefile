@@ -4,26 +4,8 @@ def write(path, template, binding)
   File.write(path, ERB.new(template).result(binding))
 end
 
-style = <<HTML
-<style>
-  * {
-    box-sizing: border-box;
-    font-family: Verdana;
-  }
-  body {
-    margin: 1rem;
-  }
-  h1 {
-    margin: 0 0 1rem 0;
-    font-size: 2rem;
-    text-align: center;
-  }
-  footer {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-  }
-</style>
+head = <<HTML
+<link rel="stylesheet" href="style.css">
 HTML
 
 footer = <<HTML
@@ -41,7 +23,7 @@ task :default do
 <html>
   <head>
     <title>#{name}</title>
-    #{style}
+    #{head}
   </head>
   <body>
     <h1>#{name}</h1>
@@ -58,7 +40,7 @@ ERB
 <html>
   <head>
     <title>Examples</title>
-    #{style}
+    #{head}
   </head>
   <body>
     <h1>bs-preact Examples</h1>
