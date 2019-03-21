@@ -10,11 +10,15 @@ module Form = struct
       []
       [ P.div
           []
-          [ P.span [] [ P.string "Name: " ]; P.input [ P.onInputValue setName ] [] ]
+          [ P.span [] [ P.string "Name: " ]
+          ; P.input [ P.value name; P.onInputValue setName ] []
+          ]
       ; P.div
           []
           [ P.span [] [ P.string "Agree To Terms?: " ]
-          ; P.input [ P.type' "checkbox"; P.onCheck setAgreeToTerms ] []
+          ; P.input
+              [ P.type' "checkbox"; P.checked agreeToTerms; P.onCheck setAgreeToTerms ]
+              []
           ]
       ; P.button [ P.disabled (not isValid) ] [ P.string "Submit" ]
       ; P.pre
