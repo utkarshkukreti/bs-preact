@@ -10,3 +10,15 @@ let <%= quote.(name) %> (value: <%= type %>) = Preact_Core.property "<%= unquote
 
 <% events.each do |(name, event_type)| %>
 let <%= name %> (handler: Preact_Event.<%= event_type %>.t -> unit) = Preact_Core.on "<%= unquote.(name[2..-1].downcase) %>" (fun event -> handler (Obj.magic event))<% end %>
+
+let onInputValue (handler : string -> unit) =
+  onInput (fun event ->
+      match (Obj.magic event)##target##value with
+      | Some value -> handler value
+      | None -> handler "")
+
+let onCheck (handler : bool -> unit) =
+  onInput (fun event ->
+      match (Obj.magic event)##target##checked with
+      | Some checked -> handler checked
+      | None -> handler false)

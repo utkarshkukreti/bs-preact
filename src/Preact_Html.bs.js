@@ -1254,6 +1254,30 @@ function onWheel(handler) {
   return Preact_Core.on("wheel", Curry.__1(handler));
 }
 
+function onInputValue(handler) {
+  return Preact_Core.on("input", (function ($$event) {
+                var $$event$1 = $$event;
+                var match = $$event$1.target.value;
+                if (match !== undefined) {
+                  return Curry._1(handler, Caml_option.valFromOption(match));
+                } else {
+                  return Curry._1(handler, "");
+                }
+              }));
+}
+
+function onCheck(handler) {
+  return Preact_Core.on("input", (function ($$event) {
+                var $$event$1 = $$event;
+                var match = $$event$1.target.checked;
+                if (match !== undefined) {
+                  return Curry._1(handler, Caml_option.valFromOption(match));
+                } else {
+                  return Curry._1(handler, false);
+                }
+              }));
+}
+
 export {
   a ,
   abbr ,
@@ -1568,6 +1592,8 @@ export {
   onTransitionEnd ,
   onScroll ,
   onWheel ,
+  onInputValue ,
+  onCheck ,
   
 }
 /* Preact_Core Not a pure module */

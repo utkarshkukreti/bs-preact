@@ -673,6 +673,10 @@ var onScroll = Preact_Html.onScroll;
 
 var onWheel = Preact_Html.onWheel;
 
+var onInputValue = Preact_Html.onInputValue;
+
+var onCheck = Preact_Html.onCheck;
+
 export {
   Event ,
   Svg ,
@@ -1010,6 +1014,8 @@ export {
   onTransitionEnd ,
   onScroll ,
   onWheel ,
+  onInputValue ,
+  onCheck ,
   
 }
 /* Preact_Core Not a pure module */

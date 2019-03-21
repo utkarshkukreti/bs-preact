@@ -701,3 +701,15 @@ let onScroll (handler : Preact_Event.Ui.t -> unit) =
 
 let onWheel (handler : Preact_Event.Wheel.t -> unit) =
   Preact_Core.on "wheel" (fun event -> handler (Obj.magic event))
+
+let onInputValue (handler : string -> unit) =
+  onInput (fun event ->
+      match (Obj.magic event)##target##value with
+      | Some value -> handler value
+      | None -> handler "")
+
+let onCheck (handler : bool -> unit) =
+  onInput (fun event ->
+      match (Obj.magic event)##target##checked with
+      | Some checked -> handler checked
+      | None -> handler false)
