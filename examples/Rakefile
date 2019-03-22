@@ -1,7 +1,7 @@
 require "cgi"
 require "erb"
 
-NO_MAIN = ["AnimationFrame"]
+NO_MAIN = ["AnimationFrame.ml"]
 
 def write(path, template, binding)
   File.write(path, ERB.new(template).result(binding))
@@ -19,14 +19,15 @@ footer = <<HTML
 HTML
 
 task :default do
-  files = FileList["*.ml"].ext("").reject { |file| NO_MAIN.include?(file) }
+  files = FileList["*.{re,ml}"].reject { |file| NO_MAIN.any? { |nm| name(nm) == name(file) } }
 
-  files.each do |name|
-    code = File.read("#{name}.ml")
-    codes = [name]
+  files.each do |file|
+    name = name(file)
+    code = File.read(file)
+    used_files = [file]
     NO_MAIN.each do |file|
-      if code.include?("#{file}.")
-        codes << file
+      if code.include?("#{name(file)}.")
+        used_files << file
       end
     end
 
@@ -40,9 +41,9 @@ task :default do
   <body>
     <h1><%= name %></h1>
     <main></main>
-    <% codes.each do |file| %>
-      <h2><%= file %>.ml</h2>
-      <pre><code class="ocaml"><%= CGI.escape_html(File.read(file + ".ml")) %></code></pre>
+    <% used_files.each do |used_file| %>
+      <h2><%= used_file %></h2>
+      <pre><code class="ocaml"><%= CGI.escape_html(File.read(used_file)) %></code></pre>
     <% end %>
     <%= footer %>
     <script src="<%= name %>.bs.js"></script>
@@ -62,7 +63,7 @@ ERB
   <body>
     <h1>bs-preact Examples</h1>
     <ul>
-      <% files.each do |name| %>
+      <% files.each do |file| name = name(file) %>
         <li>
           <a href="<%= name %>.html"><%= name %></a>
         </li>
@@ -72,4 +73,8 @@ ERB
   </body>
 </html>
 ERB
+end
+
+def name(string)
+  string.split(".").first
 end
