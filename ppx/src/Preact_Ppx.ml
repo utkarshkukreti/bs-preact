@@ -35,11 +35,25 @@ let rec rewrite_let = function
             ]
           , expr)
     ; pexp_attributes = [ ({ txt = "hook" }, PStr []) ]
+    }
+  | { pexp_desc =
+        Pexp_let
+          (Nonrecursive
+          , [ { pvb_pat =
+                  { ppat_attributes = [ ({ txt = "hook" }, PStr []) ] } as pvb_pat
+              ; pvb_expr =
+                  { pexp_desc =
+                      Pexp_apply (({ pexp_desc = Pexp_ident { txt = _ } } as ident), args)
+                  }
+              ; pvb_loc
+              }
+            ]
+          , expr)
     } ->
     let args = args @ [ "", [%expr Preact.undefined] ] in
     Ast_helper.Exp.let_
       Nonrecursive
-      [ { pvb_pat
+      [ { pvb_pat = { pvb_pat with ppat_attributes = [] }
         ; pvb_expr = Ast_helper.Exp.apply ident args
         ; pvb_attributes = []
         ; pvb_loc

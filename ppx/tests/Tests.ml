@@ -29,6 +29,14 @@ let _foo =
   let[@hook] _, _ = useThing () in
   ()
 
+(* Mainly for ReasonML *)
+let _foo =
+ fun [@preact.component "Foo"] _ ->
+  let ((_count, _setCount)[@hook]) = Preact.useState () in
+  let ((_value, _dispatch)[@hook]) = Preact.useReducer () () in
+  let ((_, _)[@hook]) = useThing () in
+  ()
+
 (* These should produce errors. *)
 
 (* let _foo _ =

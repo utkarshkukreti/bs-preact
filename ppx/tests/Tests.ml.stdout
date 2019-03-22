@@ -21,3 +21,9 @@ let _foo =
        let (_count,_setCount) = Preact.useState () Preact.undefined in
        let (_value,_dispatch) = Preact.useReducer () () Preact.undefined in
        let (_,_) = useThing () Preact.undefined in ())
+let _foo =
+  Preact.component "Foo"
+    (fun _  ->
+       let (_count,_setCount) = Preact.useState () Preact.undefined in
+       let (_value,_dispatch) = Preact.useReducer () () Preact.undefined in
+       let (_,_) = useThing () Preact.undefined in ())
