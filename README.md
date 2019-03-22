@@ -21,6 +21,9 @@ We first define `main` to be an `h1` element with the text `Hello, World!`.
 We then select the first `<main>` element in the page and render the value
 `main` into it.
 
+Note: If want to use ReasonML syntax instead of OCaml, check out the
+[last section](#reasonml) for equivalent ReasonML code.
+
 ---
 
 Components are defined using a syntax extension `[@preact.component
@@ -129,6 +132,59 @@ let make =
 For more examples, check out the files under [/examples](examples).
 A live demo of all the examples is available
 [here](https://bs-preact.netlify.com).
+
+## ReasonML
+
+Here's the Hello World example in ReasonML:
+
+```reason
+let main = Preact.h1([], [Preact.string("Hello, world!")]);
+
+switch (Preact.find("main")) {
+| Some(element) => Preact.render(main, element)
+| None => Js.Console.error("<main> not found!")
+};
+```
+
+Here's an example of ReasonML code which uses all the three annotations that
+this library uses:
+
+```reason
+module P = Preact;
+
+let useDoubleReducer =
+  [@preact.hook]
+  (
+    ((reducer, initialValue)) => {
+      let [@hook] (state, dispatch) = P.useReducer(reducer, initialValue);
+      let dispatchTwice = action => {
+        dispatch(action);
+        dispatch(action);
+      };
+      (state, dispatchTwice);
+    }
+  );
+
+let make =
+  [@preact.component "HelloCustomHooks"]
+  (
+    () => {
+      let reducer = (state, action) => state + action;
+      let [@hook] (state, dispatch) = useDoubleReducer((reducer, 0));
+      P.button([P.onClick(_ => dispatch(2))], [P.int(state)]);
+    }
+  );
+
+let main = make();
+switch (P.find("main")) {
+| Some(element) => P.render(main, element)
+| None => Js.Console.error("<main> not found!")
+};
+```
+
+For more guidance on how to translate OCaml code into ReasonML, try pasting the
+OCaml code in the [Try ReasonML](https://reasonml.github.io/en/try) page or read
+[this guide](https://reasonml.github.io/docs/en/comparison-to-ocaml).
 
 ## License
 
