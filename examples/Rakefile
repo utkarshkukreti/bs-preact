@@ -62,8 +62,17 @@ ERB
   </head>
   <body>
     <h1>bs-preact Examples</h1>
+    <h3>OCaml</h3>
     <ul>
-      <% files.each do |file| name = name(file) %>
+      <% files.select { |file| file =~ /\.ml$/ }.each do |file| name = name(file) %>
+        <li>
+          <a href="<%= name %>.html"><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+    <h3>ReasonML</h3>
+    <ul>
+      <% files.select { |file| file =~ /\.re$/ }.each do |file| name = name(file) %>
         <li>
           <a href="<%= name %>.html"><%= name %></a>
         </li>
