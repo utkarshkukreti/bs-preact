@@ -148,10 +148,12 @@ A live demo of all the examples is available
 Here's the Hello World example in ReasonML:
 
 ```reason
-let main = Preact.h1([], [Preact.string("Hello, world!")]);
+module P = Preact;
 
-switch (Preact.find("main")) {
-| Some(element) => Preact.render(main, element)
+let main = P.h1([P.id("hello")], [P.string("Hello, world!")]);
+
+switch (P.find("main")) {
+| Some(element) => P.render(main, element)
 | None => Js.Console.error("<main> not found!")
 };
 ```
