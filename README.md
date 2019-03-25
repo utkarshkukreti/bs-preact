@@ -112,7 +112,7 @@ checks whether any of these annotations were not processed and throws an error
 if it finds any because it means the annotation was incorrectly used.
 
 Here's a short snippet of a custom hook that wraps `useReducer` and dispatches
-any action twice (full example [here](examples/HelloCustomHooks.ml)):
+any action twice (full example [here](examples/CustomHooks.ml)):
 
 ```ocaml
 let useDoubleReducer =
@@ -125,7 +125,7 @@ let useDoubleReducer =
   state, dispatchTwice
 
 let make =
- fun [@preact.component "HelloCustomHooks"] () ->
+ fun [@preact.component "CustomHooks"] () ->
   let reducer state action = state + action in
   let[@hook] state, dispatch = useDoubleReducer (reducer, 0) in
   P.button [ P.onClick (fun _ -> dispatch 2) ] [ P.int state ]
@@ -168,7 +168,7 @@ let useDoubleReducer =
   );
 
 let make =
-  [@preact.component "HelloCustomHooks"]
+  [@preact.component "CustomHooks"]
   (
     () => {
       let reducer = (state, action) => state + action;

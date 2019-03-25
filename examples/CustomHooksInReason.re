@@ -14,7 +14,7 @@ let useDoubleReducer =
   );
 
 let make =
-  [@preact.component "HelloCustomHooks"]
+  [@preact.component "CustomHooks"]
   (
     () => {
       let reducer = (state, action) => state + action;
