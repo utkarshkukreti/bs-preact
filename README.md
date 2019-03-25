@@ -75,6 +75,34 @@ module Counter = struct
 end
 ```
 
+Custom hooks are created using a syntax extension `[@preact.hook]` applied to
+`fun`s of one argument. Here's a custom hook that wraps `useReducer`, invoking
+any action dispatched twice instead of once.
+
+```ocaml
+let useDoubleReducer =
+ fun [@preact.hook] (reducer, initialValue) ->
+  let[@hook] state, dispatch = P.useReducer reducer initialValue in
+  let dispatchTwice action =
+    let () = dispatch action in
+    dispatch action
+  in
+  state, dispatchTwice
+```
+
+These custom hooks are called in the same manner as the built-in hooks -- using
+`let[@hook]`:
+
+```ocaml
+let make =
+ fun [@preact.component "CustomHooks"] () ->
+  let reducer state action = state + action in
+  let[@hook] state, dispatch = useDoubleReducer (reducer, 0) in
+  P.button [ P.onClick (fun _ -> dispatch 2) ] [ P.int state ]
+```
+
+Full example [here](examples/CustomHooks.ml).
+
 ## Quick Start
 
     $ git clone https://github.com/utkarshkukreti/bs-preact-starter
@@ -110,26 +138,6 @@ a missing argument.
 After all this is done, the syntax extension traverses the whole program and
 checks whether any of these annotations were not processed and throws an error
 if it finds any because it means the annotation was incorrectly used.
-
-Here's a short snippet of a custom hook that wraps `useReducer` and dispatches
-any action twice (full example [here](examples/CustomHooks.ml)):
-
-```ocaml
-let useDoubleReducer =
- fun [@preact.hook] (reducer, initialValue) ->
-  let[@hook] state, dispatch = P.useReducer reducer initialValue in
-  let dispatchTwice action =
-    let () = dispatch action in
-    dispatch action
-  in
-  state, dispatchTwice
-
-let make =
- fun [@preact.component "CustomHooks"] () ->
-  let reducer state action = state + action in
-  let[@hook] state, dispatch = useDoubleReducer (reducer, 0) in
-  P.button [ P.onClick (fun _ -> dispatch 2) ] [ P.int state ]
-```
 
 For more examples, check out the files under [/examples](examples).
 A live demo of all the examples is available
