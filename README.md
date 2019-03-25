@@ -10,18 +10,18 @@
 The "Hello, World!" of bs-preact looks like this:
 
 ```ocaml
-let main = Preact.h1 [] [ Preact.string "Hello, world!" ]
+module P = Preact
+
+let main = P.h1 [ P.id "hello" ] [ P.string "Hello, world!" ]
 
 let () =
-  match Preact.find "main" with
-  | Some element -> Preact.render main element
+  match P.find "main" with
+  | Some element -> P.render main element
   | None -> Js.Console.error "<main> not found!"
 ```
 
-We first define `main` to be an `h1` element with the text `Hello, World!`.
-
-We then select the first `<main>` element in the page and render the value
-`main` into it.
+The code above renders `<h1 id="hello">Hello, World!</h1>` into the first
+element on the page matching the selector `main`.
 
 Note: If you want to use ReasonML syntax instead of OCaml, check out the
 [last section](#reasonml) for the equivalent ReasonML code.
