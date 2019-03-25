@@ -3,6 +3,8 @@
 > An opinionated Preact v10 binding for (OCaml | ReasonML) + BuckleScript with
 > compile time enforcement of the ["Rules of Hooks"](https://reactjs.org/docs/hooks-rules.html).
 
+> [Live Demos](https://bs-preact.netlify.com) | [Starter](https://github.com/utkarshkukreti/bs-preact-starter)
+
 ## Overview
 
 The "Hello, World!" of bs-preact looks like this:
