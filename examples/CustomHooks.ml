@@ -13,7 +13,7 @@ let make =
  fun [@preact.component "CustomHooks"] () ->
   let reducer state action = state + action in
   let[@hook] state, dispatch = useDoubleReducer (reducer, 0) in
-  P.button [ P.onClick (fun _ -> dispatch 2) ] [ P.int state ]
+  P.button [ P.onClick (fun _ -> dispatch 1) ] [ P.int state ]
 
 let main = make ()
 

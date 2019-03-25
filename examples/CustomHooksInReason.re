@@ -19,7 +19,7 @@ let make =
     () => {
       let reducer = (state, action) => state + action;
       let [@hook] (state, dispatch) = useDoubleReducer((reducer, 0));
-      P.button([P.onClick(_ => dispatch(2))], [P.int(state)]);
+      P.button([P.onClick(_ => dispatch(1))], [P.int(state)]);
     }
   );
 
