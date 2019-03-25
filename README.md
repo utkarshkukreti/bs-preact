@@ -23,8 +23,8 @@ We first define `main` to be an `h1` element with the text `Hello, World!`.
 We then select the first `<main>` element in the page and render the value
 `main` into it.
 
-Note: If want to use ReasonML syntax instead of OCaml, check out the
-[last section](#reasonml) for equivalent ReasonML code.
+Note: If you want to use ReasonML syntax instead of OCaml, check out the
+[last section](#reasonml) for the equivalent ReasonML code.
 
 ---
 
