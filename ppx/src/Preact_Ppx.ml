@@ -24,7 +24,7 @@ let check expr =
 let rec rewrite_let = function
   | { pexp_desc =
         Pexp_let
-          (Nonrecursive
+          ( Nonrecursive
           , [ { pvb_pat
               ; pvb_expr =
                   { pexp_desc =
@@ -33,12 +33,12 @@ let rec rewrite_let = function
               ; pvb_loc
               }
             ]
-          , expr)
+          , expr )
     ; pexp_attributes = [ ({ txt = "hook" }, PStr []) ]
     }
   | { pexp_desc =
         Pexp_let
-          (Nonrecursive
+          ( Nonrecursive
           , [ { pvb_pat =
                   { ppat_attributes = [ ({ txt = "hook" }, PStr []) ] } as pvb_pat
               ; pvb_expr =
@@ -48,7 +48,7 @@ let rec rewrite_let = function
               ; pvb_loc
               }
             ]
-          , expr)
+          , expr )
     } ->
     let args = args @ [ "", [%expr Preact.undefined] ] in
     Ast_helper.Exp.let_
@@ -72,15 +72,15 @@ let main _argv =
           (match expr with
           | { pexp_desc = Pexp_fun ("", None, args, expr)
             ; pexp_attributes =
-                [ ({ txt = "preact.component" }
+                [ ( { txt = "preact.component" }
                   , PStr
                       [ { pstr_desc =
                             Pstr_eval
-                              (({ pexp_desc = Pexp_constant (Const_string (_, None)) } as
-                               name)
-                              , _)
+                              ( ({ pexp_desc = Pexp_constant (Const_string (_, None)) }
+                                as name)
+                              , _ )
                         }
-                      ])
+                      ] )
                 ]
             ; pexp_loc
             } ->

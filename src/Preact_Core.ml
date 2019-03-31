@@ -23,7 +23,9 @@ module Internal = struct
     [@@bs.module "preact"]
 
   external createComponentElement
-    : 'a Js.t component -> 'a Js.t -> vnode
+    :  'a Js.t component
+    -> 'a Js.t
+    -> vnode
     = "createElement"
     [@@bs.module "preact"]
 
@@ -80,7 +82,10 @@ let useState state undefined = useStateLazy (fun () -> state) undefined
 
 (* Reducer *)
 external useReducer
-  : ('state -> 'action -> 'state) -> 'state -> undefined -> 'state * ('action -> unit)
+  :  ('state -> 'action -> 'state)
+  -> 'state
+  -> undefined
+  -> 'state * ('action -> unit)
   = ""
   [@@bs.module "preact/hooks"]
 
@@ -95,13 +100,19 @@ external useReducerLazy
 
 (* Effect *)
 external useEffect
-  : (unit -> (unit -> unit) option) -> any array option -> undefined -> unit
+  :  (unit -> (unit -> unit) option)
+  -> any array option
+  -> undefined
+  -> unit
   = "useEffect"
   [@@bs.module "preact/hooks"]
 
 (* Layout Effect *)
 external useLayoutEffect
-  : (unit -> (unit -> unit) option) -> any array option -> undefined -> unit
+  :  (unit -> (unit -> unit) option)
+  -> any array option
+  -> undefined
+  -> unit
   = "useLayoutEffect"
   [@@bs.module "preact/hooks"]
 
@@ -109,7 +120,10 @@ external useLayoutEffect
 type ('a, 'b) callback = 'a -> 'b
 
 external useCallback
-  : ('a, 'b) callback -> any array option -> undefined -> ('a, 'b) callback
+  :  ('a, 'b) callback
+  -> any array option
+  -> undefined
+  -> ('a, 'b) callback
   = ""
   [@@bs.module "preact/hooks"]
 
