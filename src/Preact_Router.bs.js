@@ -15,8 +15,7 @@ function fromString(string) {
   var path = Belt_List.fromArray(Belt_Array.keep(string.split("/"), (function (x) {
               return x !== "";
             })));
-  var path$1 = path && path[0] === "#" ? path[1] : path;
-  return /* record */[/* path */path$1];
+  return /* record */[/* path */path];
 }
 
 function toString(mode, url) {
@@ -225,16 +224,32 @@ var Builder = /* module */[
 ];
 
 function Make(S) {
-  var build = S[/* build */1];
+  var mode = S[/* mode */0];
+  var parse = S[/* parse */1];
+  var build = S[/* build */2];
   var link = function (t, props, children) {
     return Preact_Html.a(/* :: */[
                 Preact_Html.href(toString(S[/* mode */0], Curry._1(build, t))),
                 props
               ], children);
   };
+  var use$1 = function (param, param$1) {
+    return Curry._1(parse, use(mode, undefined));
+  };
+  var push$1 = function (t) {
+    return push(mode, Curry._1(build, t));
+  };
+  var replace$1 = function (t) {
+    return replace(mode, Curry._1(build, t));
+  };
   return /* module */[
+          /* mode */mode,
+          /* parse */parse,
           /* build */build,
-          /* link */link
+          /* link */link,
+          /* use */use$1,
+          /* push */push$1,
+          /* replace */replace$1
         ];
 }
 

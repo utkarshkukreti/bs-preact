@@ -12,11 +12,6 @@ module Url = struct
       |. Belt.Array.keep (fun x -> x <> "")
       |. Belt.List.fromArray
     in
-    let path =
-      match path with
-      | "#" :: rest -> rest
-      | _ -> path
-    in
     { path }
 
   let toString mode url =
@@ -144,14 +139,28 @@ module type Spec = sig
 
   val mode : mode
 
+  val parse : Url.t -> t option
+
   val build : t -> Url.t
 end
 
 module Make (S : Spec) = struct
+  let mode = S.mode
+
+  let parse = S.parse
+
   let build = S.build
 
   let link t props children =
     Preact_Html.a
       (Preact_Html.href (t |> build |> Url.toString S.mode) :: props)
       children
+
+  let use () (_ : Preact_Core.undefined) =
+    let url = Url.use mode Preact_Core.undefined in
+    parse url
+
+  let push t = t |> build |> Url.push mode
+
+  let replace t = t |> build |> Url.replace mode
 end

@@ -85,6 +85,9 @@ let () =
 
               let mode = R.History
 
+              (* We are not testing this. *)
+              let parse _ = None
+
               let build =
                 R.Builder.(
                   function
