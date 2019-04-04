@@ -3,6 +3,7 @@
 import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as Belt_List from "bs-platform/lib/es6/belt_List.js";
 import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
+import * as Pervasives from "bs-platform/lib/es6/pervasives.js";
 import * as Caml_format from "bs-platform/lib/es6/caml_format.js";
 import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
 
@@ -153,9 +154,29 @@ var Parser = /* module */[
   /* parse */parse
 ];
 
+function $less$slash$great$1(url, segment) {
+  return /* record */[/* path */Pervasives.$at(url[/* path */0], /* :: */[
+                segment,
+                /* [] */0
+              ])];
+}
+
+function $$int$1(prim) {
+  return prim.toString();
+}
+
+var Builder_000 = /* root : record */[/* path : [] */0];
+
+var Builder = /* module */[
+  Builder_000,
+  /* </> */$less$slash$great$1,
+  /* int */$$int$1
+];
+
 export {
   Url ,
   Parser ,
+  Builder ,
   
 }
 /* No side effect */

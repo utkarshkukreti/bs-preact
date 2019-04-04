@@ -72,3 +72,11 @@ module Parser = struct
     in
     get (p state)
 end
+
+module Builder = struct
+  let root = Url.{ path = [] }
+
+  let ( </> ) url segment = Url.{ path = url.path @ [ segment ] }
+
+  let int = Js.Int.toString
+end

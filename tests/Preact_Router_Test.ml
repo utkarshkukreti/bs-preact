@@ -61,4 +61,12 @@ let () =
               let a = oneOf [ s "foo" |> map 0; int ] in
               go "foo" a (Some 0);
               go "123" a (Some 123);
-              go "baz" a None)))
+              go "baz" a None));
+      describe "Builder" (fun () ->
+          let open R.Builder in
+          test "[]" (fun () -> expect root |> toEqual { R.Url.path = [] });
+          test "[]" (fun () ->
+              expect (root </> "foo") |> toEqual { R.Url.path = [ "foo" ] });
+          test "[]" (fun () ->
+              expect (root </> "foo" </> int 123)
+              |> toEqual { R.Url.path = [ "foo"; "123" ] })))
