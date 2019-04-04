@@ -3,7 +3,7 @@ module P = Preact
 module RouterRaw = struct
   let make =
    fun [@preact.component "RouterRaw"] () ->
-    let[@hook] url = P.Router.Url.use () in
+    let[@hook] url = P.Router.Url.use P.Router.Hash in
     let push string _ =
       P.Router.Url.push P.Router.Hash (P.Router.Url.fromString string)
     in

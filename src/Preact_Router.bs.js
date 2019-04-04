@@ -25,13 +25,16 @@ function toString(mode, url) {
         ) + ("/" + Belt_List.toArray(url[/* path */0]).join("/"));
 }
 
-function use(param, param$1) {
-  var match = Preact_Core.useState(fromString(window.location.pathname), undefined);
+function use(mode, param) {
+  var get = function (param) {
+    return fromString(mode ? window.location.hash.slice(1) : window.location.pathname);
+  };
+  var match = Preact_Core.useState(get(/* () */0), undefined);
   var setUrl = match[1];
   var url = match[0];
   Hooks.useEffect((function (param) {
           var f = function (param) {
-            var url$prime = fromString(window.location.pathname);
+            var url$prime = get(/* () */0);
             if (Caml_obj.caml_equal(url, url$prime)) {
               return /* () */0;
             } else {

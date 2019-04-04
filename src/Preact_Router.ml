@@ -26,8 +26,14 @@ module Url = struct
     ^ "/"
     ^ Js.Array.joinWith "/" (Belt.List.toArray url.path)
 
-  let use () (_ : Preact_Core.undefined) =
-    let get () = Webapi.Dom.location |> Webapi.Dom.Location.pathname |> fromString in
+  let use mode (_ : Preact_Core.undefined) =
+    let get () =
+      Webapi.Dom.(
+        match mode with
+        | History -> location |> Location.pathname
+        | Hash -> location |> Location.hash |> Js.String.sliceToEnd ~from:1)
+      |> fromString
+    in
     let url, setUrl = Preact_Core.useState (get ()) Preact_Core.undefined in
     let () =
       Preact_Core.useEffect
