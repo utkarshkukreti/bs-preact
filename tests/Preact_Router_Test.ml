@@ -29,14 +29,15 @@ let () =
               go "foo" (root ()) None;
               go "foo" (s "foo" |> map ()) (Some ());
               go "foo" string (Some "foo");
-              go "foo/bar" (s "foo" </> s "bar" |> map ()) (Some ());
-              go "foo/bar" (s "foo" </> string) (Some "bar");
-              go "foo/bar" (string </> s "bar") (Some "foo");
-              go
-                "foo/bar"
-                (string </> string |> map (fun a b -> a, b))
-                (Some ("foo", "bar"));
-              go "foo/bar/baz" (s "foo" </> s "bar" |> map ()) None;
-              go "foo/bar/baz" (s "foo" </> string) None;
-              go "foo/bar/baz" (string </> s "bar") None;
-              go "foo/bar/baz" (string </> string |> map (fun a b -> a, b)) None)))
+              let a = s "foo" </> s "bar" |> map () in
+              let b = s "foo" </> string in
+              let c = string </> s "bar" in
+              let d = string </> string |> map (fun a b -> a, b) in
+              go "foo/bar" a (Some ());
+              go "foo/bar" b (Some "bar");
+              go "foo/bar" c (Some "foo");
+              go "foo/bar" d (Some ("foo", "bar"));
+              go "foo/bar/baz" a None;
+              go "foo/bar/baz" b None;
+              go "foo/bar/baz" c None;
+              go "foo/bar/baz" d None)))
