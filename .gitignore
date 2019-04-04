@@ -29,5 +29,7 @@ node_modules
 /dist
 /examples/*.bs.js
 /examples/*.html
+/lib
 /ppx/lib
 /ppx/ppx
+/tests/*.bs.js

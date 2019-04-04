@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "sources": [
     { "dir": "src", "subdirs": true },
-    { "dir": "examples", "subdirs": true }
+    { "dir": "examples", "subdirs": true },
+    { "dir": "tests", "subdirs": true, "type": "dev" }
   ],
   "ppx-flags": ["bs-preact-ppx/ppx"],
-  "package-specs": {
-    "module": "es6",
-    "in-source": true
-  },
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    },
+    { "module": "commonjs" }
+  ],
   "suffix": ".bs.js",
   "bs-dependencies": ["bs-webapi"],
+  "bs-dev-dependencies": ["@glennsl/bs-jest"],
   "warnings": {
     "error": "+101"
   },
