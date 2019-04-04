@@ -3,6 +3,7 @@
 import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as Belt_List from "bs-platform/lib/es6/belt_List.js";
 import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
+import * as Caml_format from "bs-platform/lib/es6/caml_format.js";
 import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
 
 function fromString(string) {
@@ -36,6 +37,26 @@ var string = /* Parser */[(function (state) {
                 ],
                 /* [] */0
               ];
+      } else {
+        return /* [] */0;
+      }
+    })];
+
+var $$int = /* Parser */[(function (state) {
+      var match = state[/* url */0][/* path */0];
+      if (match) {
+        try {
+          return /* :: */[
+                  /* record */[
+                    /* url : record */[/* path */match[1]],
+                    /* value */Curry._1(state[/* value */1], Caml_format.caml_int_of_string(match[0]))
+                  ],
+                  /* [] */0
+                ];
+        }
+        catch (exn){
+          return /* [] */0;
+        }
       } else {
         return /* [] */0;
       }
@@ -109,6 +130,7 @@ function parse(param, url) {
 var Parser = /* module */[
   /* root */root,
   /* string */string,
+  /* int */$$int,
   /* s */s,
   /* </> */$less$slash$great,
   /* map */map,

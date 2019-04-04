@@ -28,6 +28,17 @@ module Parser = struct
         | first :: rest -> [ { url = { path = rest }; value = state.value first } ]
         | [] -> [])
 
+  let int =
+    Parser
+      (fun state ->
+        match state.url.path with
+        | first :: rest ->
+          (try
+             [ { url = { path = rest }; value = state.value (int_of_string first) } ]
+           with
+          | _ -> [])
+        | _ -> [])
+
   let s string =
     Parser
       (fun state ->
