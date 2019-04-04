@@ -16,14 +16,17 @@ let () =
               go "//foo/" { R.Url.path = [ "foo" ] };
               go "//foo/bar//baz/" { R.Url.path = [ "foo"; "bar"; "baz" ] });
           describe "toString" (fun () ->
-              let go url string =
+              let go mode url string =
                 test
                   ("\"" ^ string ^ "\"")
-                  (fun () -> expect (R.Url.toString url) |> toEqual string)
+                  (fun () -> expect (R.Url.toString mode url) |> toEqual string)
               in
-              go { R.Url.path = [] } "/";
-              go { R.Url.path = [ "foo" ] } "/foo";
-              go { R.Url.path = [ "foo"; "bar"; "baz" ] } "/foo/bar/baz"));
+              go R.History { R.Url.path = [] } "/";
+              go R.History { R.Url.path = [ "foo" ] } "/foo";
+              go R.History { R.Url.path = [ "foo"; "bar"; "baz" ] } "/foo/bar/baz";
+              go R.Hash { R.Url.path = [] } "#/";
+              go R.Hash { R.Url.path = [ "foo" ] } "#/foo";
+              go R.Hash { R.Url.path = [ "foo"; "bar"; "baz" ] } "#/foo/bar/baz"));
       describe "Parser" (fun () ->
           describe "parse" (fun () ->
               let open R.Parser in
@@ -79,6 +82,8 @@ let () =
 
             include R.Make (struct
               type nonrec t = t
+
+              let mode = R.History
 
               let build =
                 R.Builder.(

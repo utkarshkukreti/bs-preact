@@ -15,11 +15,14 @@ function fromString(string) {
   var path = Belt_List.fromArray(Belt_Array.keep(string.split("/"), (function (x) {
               return x !== "";
             })));
-  return /* record */[/* path */path];
+  var path$1 = path && path[0] === "#" ? path[1] : path;
+  return /* record */[/* path */path$1];
 }
 
-function toString(url) {
-  return "/" + Belt_List.toArray(url[/* path */0]).join("/");
+function toString(mode, url) {
+  return (
+          mode ? "#" : ""
+        ) + ("/" + Belt_List.toArray(url[/* path */0]).join("/"));
 }
 
 function use(param, param$1) {
@@ -49,13 +52,13 @@ function dispatch(param) {
   return /* () */0;
 }
 
-function push(t) {
-  window.history.pushState(/* () */0, "", toString(t));
+function push(mode, t) {
+  window.history.pushState(/* () */0, "", toString(mode, t));
   return dispatch(/* () */0);
 }
 
-function replace(t) {
-  window.history.replaceState(/* () */0, "", toString(t));
+function replace(mode, t) {
+  window.history.replaceState(/* () */0, "", toString(mode, t));
   return dispatch(/* () */0);
 }
 
@@ -219,10 +222,10 @@ var Builder = /* module */[
 ];
 
 function Make(S) {
-  var build = S[/* build */0];
+  var build = S[/* build */1];
   var link = function (t, props, children) {
     return Preact_Html.a(/* :: */[
-                Preact_Html.href(toString(Curry._1(build, t))),
+                Preact_Html.href(toString(S[/* mode */0], Curry._1(build, t))),
                 props
               ], children);
   };

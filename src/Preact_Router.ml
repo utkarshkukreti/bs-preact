@@ -1,3 +1,7 @@
+type mode =
+  | History
+  | Hash
+
 module Url = struct
   type t = { path : string list }
 
@@ -8,9 +12,19 @@ module Url = struct
       |. Belt.Array.keep (fun x -> x <> "")
       |. Belt.List.fromArray
     in
+    let path =
+      match path with
+      | "#" :: rest -> rest
+      | _ -> path
+    in
     { path }
 
-  let toString url = "/" ^ Js.Array.joinWith "/" (Belt.List.toArray url.path)
+  let toString mode url =
+    (match mode with
+    | Hash -> "#"
+    | History -> "")
+    ^ "/"
+    ^ Js.Array.joinWith "/" (Belt.List.toArray url.path)
 
   let use () (_ : Preact_Core.undefined) =
     let get () = Webapi.Dom.location |> Webapi.Dom.Location.pathname |> fromString in
@@ -38,15 +52,15 @@ module Url = struct
     |> Webapi.Dom.Window.dispatchEvent (Webapi.Dom.Event.make "popstate")
     |> ignore
 
-  let push t =
+  let push mode t =
     let () =
-      Webapi.Dom.(history |> History.pushState (Obj.magic ()) "" (t |> toString))
+      Webapi.Dom.(history |> History.pushState (Obj.magic ()) "" (t |> toString mode))
     in
     dispatch ()
 
-  let replace t =
+  let replace mode t =
     let () =
-      Webapi.Dom.(history |> History.replaceState (Obj.magic ()) "" (t |> toString))
+      Webapi.Dom.(history |> History.replaceState (Obj.magic ()) "" (t |> toString mode))
     in
     dispatch ()
 end
@@ -122,6 +136,8 @@ end
 module type Spec = sig
   type t
 
+  val mode : mode
+
   val build : t -> Url.t
 end
 
@@ -129,5 +145,7 @@ module Make (S : Spec) = struct
   let build = S.build
 
   let link t props children =
-    Preact_Html.a (Preact_Html.href (t |> build |> Url.toString) :: props) children
+    Preact_Html.a
+      (Preact_Html.href (t |> build |> Url.toString S.mode) :: props)
+      children
 end
