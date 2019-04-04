@@ -46,10 +46,19 @@ module Router_ = struct
       ; P.button [ P.onClick (push Router.Posts) ] [ P.string "PUSH Posts" ]
       ; P.button [ P.onClick (push (Router.Post 123)) ] [ P.string "PUSH Post 123" ]
       ; P.button [ P.onClick (push (Router.Post 456)) ] [ P.string "PUSH Post 456" ]
+      ; P.br [] []
       ; P.button [ P.onClick (replace Router.Home) ] [ P.string "REPLACE Home" ]
       ; P.button [ P.onClick (replace Router.Posts) ] [ P.string "REPLACE Posts" ]
       ; P.button [ P.onClick (replace (Router.Post 123)) ] [ P.string "REPLACE Post 123" ]
       ; P.button [ P.onClick (replace (Router.Post 456)) ] [ P.string "REPLACE Post 456" ]
+      ; P.br [] []
+      ; Router.link Router.Home [] [ P.string "LINK Home" ]
+      ; P.string " "
+      ; Router.link Router.Posts [] [ P.string "LINK Posts" ]
+      ; P.string " "
+      ; Router.link (Router.Post 123) [] [ P.string "LINK Post 123" ]
+      ; P.string " "
+      ; Router.link (Router.Post 456) [] [ P.string "LINK Post 456" ]
       ; P.h3
           []
           [ P.string
