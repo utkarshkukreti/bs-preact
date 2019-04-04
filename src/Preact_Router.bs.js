@@ -6,6 +6,7 @@ import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
 import * as Pervasives from "bs-platform/lib/es6/pervasives.js";
 import * as Caml_format from "bs-platform/lib/es6/caml_format.js";
 import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
+import * as Preact_Html from "./Preact_Html.bs.js";
 
 function fromString(string) {
   var path = Belt_List.fromArray(Belt_Array.keep(string.split("/"), (function (x) {
@@ -173,10 +174,25 @@ var Builder = /* module */[
   /* int */$$int$1
 ];
 
+function Make(S) {
+  var build = S[/* build */0];
+  var link = function (t, props, children) {
+    return Preact_Html.a(/* :: */[
+                Preact_Html.href(toString(Curry._1(build, t))),
+                props
+              ], children);
+  };
+  return /* module */[
+          /* build */build,
+          /* link */link
+        ];
+}
+
 export {
   Url ,
   Parser ,
   Builder ,
+  Make ,
   
 }
-/* No side effect */
+/* Preact_Html Not a pure module */

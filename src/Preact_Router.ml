@@ -80,3 +80,16 @@ module Builder = struct
 
   let int = Js.Int.toString
 end
+
+module type Spec = sig
+  type t
+
+  val build : t -> Url.t
+end
+
+module Make (S : Spec) = struct
+  let build = S.build
+
+  let link t props children =
+    Preact_Html.a (Preact_Html.href (t |> build |> Url.toString) :: props) children
+end

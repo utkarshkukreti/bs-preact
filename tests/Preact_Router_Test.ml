@@ -69,4 +69,32 @@ let () =
               expect (root </> "foo") |> toEqual { R.Url.path = [ "foo" ] });
           test "[]" (fun () ->
               expect (root </> "foo" </> int 123)
-              |> toEqual { R.Url.path = [ "foo"; "123" ] })))
+              |> toEqual { R.Url.path = [ "foo"; "123" ] }));
+      describe "Make" (fun () ->
+          let module Router = struct
+            type t =
+              | Home
+              | Posts
+              | Post of int
+
+            include R.Make (struct
+              type nonrec t = t
+
+              let build =
+                R.Builder.(
+                  function
+                  | Home -> root
+                  | Posts -> root </> "posts"
+                  | Post id -> root </> "posts" </> int id)
+            end)
+          end
+          in
+          test "Home" (fun () ->
+              expect (Router.link Router.Home [] [])
+              |> toEqual (Preact.a [ Preact.href "/" ] []));
+          test "Posts" (fun () ->
+              expect (Router.link Router.Posts [] [])
+              |> toEqual (Preact.a [ Preact.href "/posts" ] []));
+          test "Post 123" (fun () ->
+              expect (Router.link (Router.Post 123) [] [])
+              |> toEqual (Preact.a [ Preact.href "/posts/123" ] []))))
