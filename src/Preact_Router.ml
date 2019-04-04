@@ -11,6 +11,44 @@ module Url = struct
     { path }
 
   let toString url = "/" ^ Js.Array.joinWith "/" (Belt.List.toArray url.path)
+
+  let use () (_ : Preact_Core.undefined) =
+    let get () = Webapi.Dom.location |> Webapi.Dom.Location.pathname |> fromString in
+    let url, setUrl = Preact_Core.useState (get ()) Preact_Core.undefined in
+    let () =
+      Preact_Core.useEffect
+        (fun () ->
+          let f _ =
+            let url' = get () in
+            if url = url' then () else setUrl url'
+          in
+          let () =
+            Webapi.Dom.window |> Webapi.Dom.Window.addEventListener "popstate" f
+          in
+          Some
+            (fun () ->
+              Webapi.Dom.window |> Webapi.Dom.Window.removeEventListener "popstate" f))
+        None
+        Preact_Core.undefined
+    in
+    url
+
+  let dispatch () =
+    Webapi.Dom.window
+    |> Webapi.Dom.Window.dispatchEvent (Webapi.Dom.Event.make "popstate")
+    |> ignore
+
+  let push t =
+    let () =
+      Webapi.Dom.(history |> History.pushState (Obj.magic ()) "" (t |> toString))
+    in
+    dispatch ()
+
+  let replace t =
+    let () =
+      Webapi.Dom.(history |> History.replaceState (Obj.magic ()) "" (t |> toString))
+    in
+    dispatch ()
 end
 
 module Parser = struct
