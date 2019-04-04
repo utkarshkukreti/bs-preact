@@ -1,6 +1,6 @@
 {
   "name": "bs-preact",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "files": [
     "bsconfig.json",
@@ -28,7 +28,7 @@
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "bs-preact-ppx": "^0.1.1",
+    "bs-preact-ppx": "^0.1.2",
     "bs-webapi": "^0.13.6",
     "preact": "^10.0.0-alpha.3"
   },
