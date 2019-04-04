@@ -49,6 +49,11 @@ module Parser = struct
   let ( </> ) (Parser a) (Parser b) =
     Parser (fun state -> Belt.List.map (a state) b |. Belt.List.flatten)
 
+  let oneOf parsers =
+    Parser
+      (fun state ->
+        parsers |. Belt.List.map (fun (Parser p) -> p state) |. Belt.List.flatten)
+
   let map value (Parser p) =
     Parser
       (fun state ->

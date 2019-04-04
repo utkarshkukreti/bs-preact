@@ -48,4 +48,8 @@ let () =
               go "foo/bar/baz" c None;
               go "foo/bar/baz" d (Some ("foo", "baz"));
               go "foo/bar/baz" e None;
-              go "foo/bar/baz" f None)))
+              go "foo/bar/baz" f None;
+              let a = oneOf [ s "foo" |> map 0; int ] in
+              go "foo" a (Some 0);
+              go "123" a (Some 123);
+              go "baz" a None)))

@@ -87,6 +87,14 @@ function $less$slash$great(param, param$1) {
             })];
 }
 
+function oneOf(parsers) {
+  return /* Parser */[(function (state) {
+              return Belt_List.flatten(Belt_List.map(parsers, (function (param) {
+                                return Curry._1(param[0], state);
+                              })));
+            })];
+}
+
 function map(value, param) {
   var p = param[0];
   return /* Parser */[(function (state) {
@@ -133,6 +141,7 @@ var Parser = /* module */[
   /* int */$$int,
   /* s */s,
   /* </> */$less$slash$great,
+  /* oneOf */oneOf,
   /* map */map,
   /* parse */parse
 ];
