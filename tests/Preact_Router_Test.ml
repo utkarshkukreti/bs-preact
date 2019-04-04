@@ -14,7 +14,16 @@ let () =
               go "" { R.Url.path = [] };
               go "foo" { R.Url.path = [ "foo" ] };
               go "//foo/" { R.Url.path = [ "foo" ] };
-              go "//foo/bar//baz/" { R.Url.path = [ "foo"; "bar"; "baz" ] }));
+              go "//foo/bar//baz/" { R.Url.path = [ "foo"; "bar"; "baz" ] });
+          describe "toString" (fun () ->
+              let go url string =
+                test
+                  ("\"" ^ string ^ "\"")
+                  (fun () -> expect (R.Url.toString url) |> toEqual string)
+              in
+              go { R.Url.path = [] } "/";
+              go { R.Url.path = [ "foo" ] } "/foo";
+              go { R.Url.path = [ "foo"; "bar"; "baz" ] } "/foo/bar/baz"));
       describe "Parser" (fun () ->
           describe "parse" (fun () ->
               let open R.Parser in

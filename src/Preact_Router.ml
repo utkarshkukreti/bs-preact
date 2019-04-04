@@ -9,6 +9,8 @@ module Url = struct
       |. Belt.List.fromArray
     in
     { path }
+
+  let toString url = "/" ^ Js.Array.joinWith "/" (Belt.List.toArray url.path)
 end
 
 module Parser = struct

@@ -13,7 +13,14 @@ function fromString(string) {
   return /* record */[/* path */path];
 }
 
-var Url = /* module */[/* fromString */fromString];
+function toString(url) {
+  return "/" + Belt_List.toArray(url[/* path */0]).join("/");
+}
+
+var Url = /* module */[
+  /* fromString */fromString,
+  /* toString */toString
+];
 
 function root(value) {
   return /* Parser */[(function (state) {
