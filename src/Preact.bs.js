@@ -7,6 +7,8 @@ var Event = 0;
 
 var Svg = 0;
 
+var Router = 0;
+
 var Internal = Preact_Core.Internal;
 
 var _0 = Preact_Core._0;
@@ -680,6 +682,7 @@ var onCheck = Preact_Html.onCheck;
 export {
   Event ,
   Svg ,
+  Router ,
   Internal ,
   _0 ,
   _1 ,
