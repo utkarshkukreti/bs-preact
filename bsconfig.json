@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "sources": [
     { "dir": "src", "subdirs": true },
-    { "dir": "examples", "subdirs": true },
+    { "dir": "examples", "subdirs": true, "type": "dev" },
     { "dir": "tests", "subdirs": true, "type": "dev" }
   ],
   "ppx-flags": ["bs-preact-ppx/ppx"],
