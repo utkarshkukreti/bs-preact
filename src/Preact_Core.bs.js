@@ -82,9 +82,18 @@ var Context = /* module */[/* provide */provide];
 var Ref = /* module */[];
 
 function useState(state, $$undefined) {
-  return Hooks.useState((function (param) {
-                return state;
-              }), $$undefined);
+  var match = Hooks.useState((function (param) {
+          return state;
+        }), $$undefined);
+  var modifyState = match[1];
+  return /* tuple */[
+          match[0],
+          (function (state) {
+              return Curry._1(modifyState, (function (param) {
+                            return state;
+                          }));
+            })
+        ];
 }
 
 function property(name, value) {

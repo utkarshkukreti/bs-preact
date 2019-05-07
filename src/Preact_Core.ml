@@ -75,10 +75,16 @@ end
 (* Hooks *)
 
 (* State *)
-external useStateLazy : (unit -> 'a) -> undefined -> 'a * ('a -> unit) = "useState"
+external useStateLazy
+  :  (unit -> 'a)
+  -> undefined
+  -> 'a * (('a -> 'a) -> unit)
+  = "useState"
   [@@bs.module "preact/hooks"]
 
-let useState state undefined = useStateLazy (fun () -> state) undefined
+let useState state undefined =
+  let state, modifyState = useStateLazy (fun () -> state) undefined in
+  state, fun state -> modifyState (fun _ -> state)
 
 (* Reducer *)
 external useReducer
