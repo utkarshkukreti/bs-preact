@@ -1,3 +1,5 @@
+# Deprecated in favor of https://github.com/utkarshkukreti/reaml, which has more features, works with the latest BuckleScript, and can be used with both React and Preact.
+
 # bs-preact
 
 > An opinionated Preact v10 binding for (OCaml | ReasonML) + BuckleScript with
